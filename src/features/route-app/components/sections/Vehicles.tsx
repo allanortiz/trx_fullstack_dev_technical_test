@@ -8,6 +8,7 @@ import clsx from "clsx";
 import { VehicleDetail } from "../composite/VehicleDetail";
 import { ResizeElement } from "../basic/ResizeElement";
 import Typography from "@/components/basic/Typography";
+import { InputSearch } from "@/components/composite/InputSearch";
 
 type VehicleItemProps = {
   vehicles: Vehicle[];
@@ -33,10 +34,17 @@ export const Vehicles = ({
           as="h2"
           fontWeight="bold"
           fontSize="2xl"
-          className="block w-full mt-8 mb-8 text-center"
+          className="block w-full my-8 text-center"
         >
           Lista de vehículos
         </Typography>
+
+        <div className="mb-8 grid place-items-center">
+          <InputSearch
+            placeholder="¿Qué vehículo buscas?"
+            onFilterClick={() => {}}
+          />
+        </div>
 
         <div className="flex flex-col flex-grow gap-4 overflow-y-auto transition duration-200 ease-out md:pr-8 md:pl-2 max-md:px-8 md:pb-8">
           {vehicles.map((vehicle, index) => (

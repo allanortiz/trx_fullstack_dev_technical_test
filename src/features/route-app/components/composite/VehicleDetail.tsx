@@ -1,6 +1,6 @@
-import { Button } from "@/components/basic/buttons/Button";
-import { Vehicle } from "@/types/Vehicle";
 import clsx from "clsx";
+import { Button } from "@/components/basic/Button";
+import { Vehicle } from "@/types/Vehicle";
 import { BsChevronLeft } from "react-icons/bs";
 import { MdModeEdit } from "react-icons/md";
 import { DetailItem } from "../basic/DetailItem";

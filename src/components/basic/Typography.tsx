@@ -51,6 +51,7 @@ const COLOR_MAPPING = {
   primary: "text-primary",
   secondary: "text-secondary",
   "slate-700": "text-slate-600",
+  "gray-600": "text-gray-800",
   "gray-800": "text-gray-800",
 };
 
