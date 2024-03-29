@@ -1,5 +1,6 @@
 import clsx from "clsx";
-import React from "react";
+import React, { ButtonHTMLAttributes } from "react";
+import { renderToStaticNodeStream } from "react-dom/server";
 import { CgSpinner } from "react-icons/cg";
 
 const COLOR_MAPPING = {
@@ -22,7 +23,11 @@ type ButtonProps = {
   isStrong?: boolean;
   isUppercase?: boolean;
   isLoading?: boolean;
-};
+  type?: "button" | "submit" | "reset";
+} & Pick<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  "onClick" | "type" | "disabled"
+>;
 
 export const Button = ({
   children,
@@ -30,6 +35,8 @@ export const Button = ({
   isStrong = false,
   isUppercase = false,
   isLoading = false,
+  type = "button",
+  ...rest
 }: ButtonProps): JSX.Element => {
   const classes = clsx(
     "group rounded-lg px-6 py-3 transition-all duration-200 ease-in-out tracking-wider",
@@ -40,7 +47,7 @@ export const Button = ({
   );
 
   return (
-    <button className={classes}>
+    <button type={type} {...rest} className={classes}>
       {isLoading && (
         <CgSpinner
           className={clsx(
