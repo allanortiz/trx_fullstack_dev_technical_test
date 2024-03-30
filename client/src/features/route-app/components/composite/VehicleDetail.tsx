@@ -10,12 +10,19 @@ type VehicleDetailProps = {
   vehicle: Vehicle;
   onClose: () => void;
   onEdit: () => void;
+  onDelete: () => void;
   hasPadding?: boolean;
 };
 
-export const VehicleDetail = ({ vehicle, onClose, onEdit, hasPadding = true }: VehicleDetailProps): JSX.Element => {
+export const VehicleDetail = ({
+  vehicle,
+  onClose,
+  onEdit,
+  onDelete,
+  hasPadding = true,
+}: VehicleDetailProps): JSX.Element => {
   const {
-    licence_plate,
+    license_plate,
     economic_number,
     vim,
     seats,
@@ -41,11 +48,11 @@ export const VehicleDetail = ({ vehicle, onClose, onEdit, hasPadding = true }: V
       </div>
 
       <Typography as="h2" className="my-4 text-center" fontWeight="bold" fontSize="2xl">
-        {licence_plate || ''}
+        {license_plate || ''}
       </Typography>
 
       <div className="flex flex-col gap-2 px-8 mt-8 text-2xl">
-        <DetailItem label="Placa" value={licence_plate ?? ''} />
+        <DetailItem label="Placa" value={license_plate ?? ''} />
         <DetailItem label="Número Económico" value={economic_number ?? ''} />
         <DetailItem label="VIM" value={vim ?? ''} />
         <DetailItem label="Asientos" value={String(seats)} />
@@ -58,7 +65,7 @@ export const VehicleDetail = ({ vehicle, onClose, onEdit, hasPadding = true }: V
       </div>
 
       <div className="grid w-full my-8 place-items-center">
-        <Button color="danger" isStrong>
+        <Button color="danger" isStrong onClick={onDelete}>
           Eliminar
         </Button>
       </div>

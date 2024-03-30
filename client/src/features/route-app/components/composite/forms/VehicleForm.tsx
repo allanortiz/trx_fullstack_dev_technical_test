@@ -1,6 +1,7 @@
 import { Button } from '@/components/basic/Button';
 import Input from '@/components/basic/inputs/Input';
 import NumberInput from '@/components/basic/inputs/NumberInput';
+import RestrictedInput from '@/components/basic/inputs/RestrictedInput';
 import Typography from '@/components/basic/Typography';
 import { Vehicle } from '@/types/Vehicle';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,8 +17,8 @@ type VehicleFormProps = {
 };
 
 const validationSchema = yup.object().shape({
-  licence_plate: yup.string().trim().required('La placa es requerida'),
-  economic_number: yup.string().trim().required('El número económico es requerido'),
+  license_plate: yup.string().trim().uppercase().required('La placa es requerida'),
+  economic_number: yup.string().trim().uppercase().required('El número económico es requerido'),
   vim: yup.string().trim().required('El VIM es requerido'),
   seats: yup
     .number()
@@ -54,19 +55,23 @@ export const VehicleForm = ({ title, onCancel, onSubmit }: VehicleFormProps): JS
         </Typography>
       )}
 
-      <div className={clsx('flex flex-col gap-4')}>
-        <Input
-          {...register('licence_plate')}
+      <div className="flex flex-col gap-4">
+        <RestrictedInput
+          {...register('license_plate')}
           label="Placa"
-          error={errors.licence_plate?.message}
+          error={errors.license_plate?.message}
           placeholder="Ej. ABC-123"
+          regex="^[a-zA-Z0-9-]*$"
+          maxLength={20}
         />
 
-        <Input
+        <RestrictedInput
           {...register('economic_number')}
           label="Número Económico"
           error={errors.economic_number?.message}
           placeholder="Ej. 123"
+          regex="^[a-zA-Z0-9]*$"
+          maxLength={40}
         />
 
         <Input {...register('vim')} label="VIM" error={errors.vim?.message} placeholder="Ej. 123456" />
@@ -108,7 +113,7 @@ export const VehicleForm = ({ title, onCancel, onSubmit }: VehicleFormProps): JS
         <Input {...register('color')} label="Color" error={errors.color?.message} placeholder="Ej. Rojo" />
       </div>
 
-      <div className="flex flex-row justify-between items-center pt-12 pb-12">
+      <div className="flex flex-row items-center justify-between pt-12 pb-12">
         <Button onClick={onCancel}>Cancelar</Button>
 
         <Button type="submit" color="primary">

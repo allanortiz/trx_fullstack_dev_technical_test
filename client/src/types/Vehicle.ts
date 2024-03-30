@@ -1,6 +1,6 @@
 export type Vehicle = {
   id?: string;
-  licence_plate: string;
+  license_plate: string;
   economic_number: string;
   vim: string;
   seats: number;
