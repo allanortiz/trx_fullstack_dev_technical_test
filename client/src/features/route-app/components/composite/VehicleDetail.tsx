@@ -12,6 +12,7 @@ type VehicleDetailProps = {
   onEdit: () => void;
   onDelete: () => void;
   hasPadding?: boolean;
+  isDeleting?: boolean;
 };
 
 export const VehicleDetail = ({
@@ -20,6 +21,7 @@ export const VehicleDetail = ({
   onEdit,
   onDelete,
   hasPadding = true,
+  isDeleting,
 }: VehicleDetailProps): JSX.Element => {
   const {
     license_plate,
@@ -65,7 +67,7 @@ export const VehicleDetail = ({
       </div>
 
       <div className="grid w-full my-8 place-items-center">
-        <Button color="danger" isStrong onClick={onDelete}>
+        <Button color="danger" isStrong onClick={onDelete} isLoading={isDeleting} disabled={isDeleting}>
           Eliminar
         </Button>
       </div>

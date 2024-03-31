@@ -1,5 +1,5 @@
-import { Vehicle } from '@/types/Vehicle';
 import httpClient from '@/utils/httpClient';
+import { Vehicle } from '@/types/Vehicle';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function useUpdateVehicle() {
@@ -7,10 +7,16 @@ export function useUpdateVehicle() {
 
   return useMutation({
     mutationFn: async (data: Vehicle) => {
-      return await httpClient.put(`api/vehicle/${data.id}`, { ...data });
+      return await httpClient.put(`api/vehicles/${data.id}`, { ...data });
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['vehicles'] });
+    onSuccess: (data, variables) => {
+      queryClient.setQueryData(['vehicles'], (old: any) => {
+        const index = old.data.findIndex((vehicle: Vehicle) => vehicle.id === variables.id);
+
+        old.data[index] = variables;
+
+        return { ...old };
+      });
     },
   });
 }

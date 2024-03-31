@@ -6,7 +6,7 @@ export function useDeleteVehicle() {
 
   return useMutation({
     mutationFn: async (vehicleId: string) => {
-      return await httpClient.delete(`api/vehicle/${vehicleId}`);
+      return await httpClient.delete(`api/vehicles/${vehicleId}`, {});
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['vehicles'] });

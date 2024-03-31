@@ -1,22 +1,30 @@
-const express = require("express");
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import vehicleRoutes from './routes/vehicleRoutes.js';
+
 const app = express();
-const cors = require("cors");
-const { db } = require("./firebase");
-const { VehicleController } = require("./src/controllers/VehicleController");
 
 const PORT = 8080;
 
+// const WHITE_LIST = ["http://localhost:3000"];
+
+// const corsOptions = {
+//   origin: (origin, callback) => {
+//     if (WHITE_LIST.indexOf(origin) !== -1) {
+//       callback(null, true);
+//       return;
+//     }
+
+//     callback(new Error("Not allowed by CORS"));
+//   },
+// };
+
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(cors());
 
-app.get("/api/vehicles", VehicleController.getVehicles);
-app.post("/api/vehicles", VehicleController.createVehicle);
-// app.put("/api/vehicles/:id", VehicleController.updateVehicle);
-// app.delete("/api/vehicles/:id", VehicleController.deleteVehicle);
-
-// app.get("/api/vehicles", (req, res) => {
-//   res.json({ message: "Vehicle List" });
-// });
+app.use('/api', vehicleRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

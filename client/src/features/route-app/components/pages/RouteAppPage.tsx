@@ -1,11 +1,14 @@
 import { Vehicle } from '@/types/Vehicle';
 import { Map, Vehicles } from '../..';
+import { Callback } from '@/types/Callback';
 
 type RoutesAppPageProps = {
   vehicles: Vehicle[];
-  createVehicle: (vehicle: Vehicle) => void;
-  updateVehicle: (vehicle: Vehicle) => void;
-  deleteVehicle: (vehicleId: string) => void;
+  createVehicle: (vehicle: Vehicle, callback: Callback) => void;
+  updateVehicle: (vehicle: Vehicle, callback: Callback) => void;
+  deleteVehicle: (vehicleId: string, callback: Callback) => void;
+  isLoadingVehicles?: boolean;
+  isSavingVehicle?: boolean;
 };
 
 export const RoutesAppPage = ({
@@ -13,6 +16,8 @@ export const RoutesAppPage = ({
   createVehicle,
   updateVehicle,
   deleteVehicle,
+  isLoadingVehicles,
+  isSavingVehicle,
 }: RoutesAppPageProps): JSX.Element => {
   return (
     <div className="flex flex-col flex-grow w-full 100vh md:flex-row bg-primary">
@@ -26,6 +31,8 @@ export const RoutesAppPage = ({
           createVehicle={createVehicle}
           updateVehicle={updateVehicle}
           deleteVehicle={deleteVehicle}
+          isLoading={isLoadingVehicles}
+          isSaving={isSavingVehicle}
         />
       </div>
     </div>

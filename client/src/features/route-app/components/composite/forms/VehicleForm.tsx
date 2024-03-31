@@ -10,10 +10,11 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 type VehicleFormProps = {
-  defaultValues?: Vehicle;
-  onSubmit: (values: Vehicle) => void;
   onCancel: () => void;
+  onSubmit: (values: Vehicle) => void;
+  defaultValues?: Vehicle;
   title?: string;
+  isSubmitting?: boolean;
 };
 
 const validationSchema = yup.object().shape({
@@ -38,13 +39,20 @@ const validationSchema = yup.object().shape({
   color: yup.string().trim().required('El color es requerido'),
 });
 
-export const VehicleForm = ({ title, onCancel, onSubmit }: VehicleFormProps): JSX.Element => {
+export const VehicleForm = ({
+  onCancel,
+  onSubmit,
+  defaultValues,
+  title,
+  isSubmitting,
+}: VehicleFormProps): JSX.Element => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(validationSchema),
+    defaultValues: { ...defaultValues },
   });
 
   return (
@@ -114,9 +122,11 @@ export const VehicleForm = ({ title, onCancel, onSubmit }: VehicleFormProps): JS
       </div>
 
       <div className="flex flex-row items-center justify-between pt-12 pb-12">
-        <Button onClick={onCancel}>Cancelar</Button>
+        <Button onClick={onCancel} disabled={isSubmitting}>
+          Cancelar
+        </Button>
 
-        <Button type="submit" color="primary">
+        <Button type="submit" color="primary" isLoading={isSubmitting} disabled={isSubmitting}>
           Guardar
         </Button>
       </div>

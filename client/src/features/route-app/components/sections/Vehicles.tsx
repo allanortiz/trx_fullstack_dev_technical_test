@@ -11,21 +11,24 @@ import { ResizeElement } from '../basic/ResizeElement';
 import { InputSearch } from '@/components/composite/InputSearch';
 import { SiAddthis } from 'react-icons/si';
 import { VehicleForm } from '../composite/forms/VehicleForm';
+import { Callback } from '@/types/Callback';
 
 type VehicleItemProps = {
   vehicles: Vehicle[];
-  createVehicle: (vehicle: Vehicle) => void;
-  updateVehicle: (vehicle: Vehicle) => void;
-  deleteVehicle: (vehicleId: string) => void;
+  createVehicle: (vehicle: Vehicle, callback: Callback) => void;
+  updateVehicle: (vehicle: Vehicle, callback: Callback) => void;
+  deleteVehicle: (vehicleId: string, callback: Callback) => void;
   isLoading?: boolean;
+  isSaving?: boolean;
 };
 
 export const Vehicles = ({
   vehicles,
-  isLoading,
   createVehicle,
   updateVehicle,
   deleteVehicle,
+  isLoading,
+  isSaving,
 }: VehicleItemProps): JSX.Element => {
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(null as any);
   const [isNewVehicleVisible, setIsNewVehicleVisible] = useState(false);
@@ -53,16 +56,24 @@ export const Vehicles = ({
     setIsEditionVehicleVisible(false);
   };
 
-  const saveVehicle = (vehicle: Vehicle) => {
-    console.log(vehicle);
-
+  const onVehicleFormSubmit = (vehicle: Vehicle) => {
     if (isNewVehicleVisible) {
-      createVehicle(vehicle);
+      createVehicle(vehicle, {
+        onSuccess: () => setIsNewVehicleVisible(false),
+      });
 
       return;
     }
 
-    updateVehicle(vehicle);
+    updateVehicle(vehicle, {
+      onSuccess: () => setIsEditionVehicleVisible(false),
+    });
+  };
+
+  const handleDeleteVehicle = () => {
+    if (!selectedVehicle?.id) return;
+
+    deleteVehicle(selectedVehicle.id, { onSuccess: () => deselectVehicle() });
   };
 
   return (
@@ -105,16 +116,19 @@ export const Vehicles = ({
             vehicle={selectedVehicle}
             onClose={deselectVehicle}
             onEdit={showEditVehicle}
-            onDelete={() => deleteVehicle(String(selectedVehicle.id))}
+            onDelete={handleDeleteVehicle}
+            isDeleting={!isEditionVehicleVisible && isSaving}
             hasPadding={false}
           />
         )}
 
         {(isNewVehicleVisible || isEditionVehicleVisible) && (
           <VehicleForm
-            onSubmit={saveVehicle}
+            defaultValues={selectedVehicle}
+            onSubmit={onVehicleFormSubmit}
             onCancel={cancelForm}
             title={isEditionVehicleVisible ? 'Edición de Vehículo' : 'Nuevo Vehículo'}
+            isSubmitting={isSaving}
           />
         )}
       </div>
