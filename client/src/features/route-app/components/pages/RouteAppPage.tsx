@@ -1,12 +1,14 @@
 import { Vehicle } from '@/types/Vehicle';
 import { Map, Vehicles } from '../..';
 import { Callback } from '@/types/Callback';
+import { UseVehicleProps } from '../../hooks/useVehicles';
 
 type RoutesAppPageProps = {
   vehicles: Vehicle[];
   createVehicle: (vehicle: Vehicle, callback: Callback) => void;
   updateVehicle: (vehicle: Vehicle, callback: Callback) => void;
   deleteVehicle: (vehicleId: string, callback: Callback) => void;
+  overwriteVehicleListOptions: (options: UseVehicleProps) => void;
   isLoadingVehicles?: boolean;
   isSavingVehicle?: boolean;
 };
@@ -16,6 +18,7 @@ export const RoutesAppPage = ({
   createVehicle,
   updateVehicle,
   deleteVehicle,
+  overwriteVehicleListOptions,
   isLoadingVehicles,
   isSavingVehicle,
 }: RoutesAppPageProps): JSX.Element => {
@@ -31,6 +34,7 @@ export const RoutesAppPage = ({
           createVehicle={createVehicle}
           updateVehicle={updateVehicle}
           deleteVehicle={deleteVehicle}
+          overwriteVehicleListOptions={overwriteVehicleListOptions}
           isLoading={isLoadingVehicles}
           isSaving={isSavingVehicle}
         />

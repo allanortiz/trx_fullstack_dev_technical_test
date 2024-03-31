@@ -12,12 +12,14 @@ import { InputSearch } from '@/components/composite/InputSearch';
 import { SiAddthis } from 'react-icons/si';
 import { VehicleForm } from '../composite/forms/VehicleForm';
 import { Callback } from '@/types/Callback';
+import { UseVehicleProps } from '../../hooks/useVehicles';
 
 type VehicleItemProps = {
   vehicles: Vehicle[];
   createVehicle: (vehicle: Vehicle, callback: Callback) => void;
   updateVehicle: (vehicle: Vehicle, callback: Callback) => void;
   deleteVehicle: (vehicleId: string, callback: Callback) => void;
+  overwriteVehicleListOptions: (options: UseVehicleProps) => void;
   isLoading?: boolean;
   isSaving?: boolean;
 };
@@ -27,16 +29,13 @@ export const Vehicles = ({
   createVehicle,
   updateVehicle,
   deleteVehicle,
+  overwriteVehicleListOptions,
   isLoading,
   isSaving,
 }: VehicleItemProps): JSX.Element => {
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(null as any);
   const [isNewVehicleVisible, setIsNewVehicleVisible] = useState(false);
   const [isEditionVehicleVisible, setIsEditionVehicleVisible] = useState(false);
-
-  useEffect(() => {
-    console.log('eyeyeye');
-  }, [vehicles]);
 
   const showNewVehicle = () => {
     setIsNewVehicleVisible(true);
@@ -60,7 +59,7 @@ export const Vehicles = ({
     setIsEditionVehicleVisible(false);
   };
 
-  const onVehicleFormSubmit = (vehicle: Vehicle) => {
+  const submitVehicleForm = (vehicle: Vehicle) => {
     if (isNewVehicleVisible) {
       createVehicle(vehicle, {
         onSuccess: () => setIsNewVehicleVisible(false),
@@ -83,6 +82,10 @@ export const Vehicles = ({
     deleteVehicle(selectedVehicle.id, { onSuccess: () => deselectVehicle() });
   };
 
+  const handleSearchChange = (queryString: string) => {
+    overwriteVehicleListOptions({ filter: queryString });
+  };
+
   return (
     <section className="flex flex-col w-full h-full max-h-screen overflow-auto bg-white max-md:rounded-t-2xl md:flex-row md:rounded-l-2xl">
       {isLoading && <VehiclesSkeleton />}
@@ -100,7 +103,7 @@ export const Vehicles = ({
         </Typography>
 
         <div className="flex flex-row items-center justify-between mb-8">
-          <InputSearch placeholder="¿Qué vehículo buscas?" onFilterClick={() => {}} />
+          <InputSearch placeholder="¿Qué vehículo buscas?" onSearchChange={handleSearchChange} />
 
           <SiAddthis className="text-primary w-[2rem] h-[2rem] cursor-pointer" onClick={showNewVehicle} />
         </div>
@@ -132,7 +135,7 @@ export const Vehicles = ({
         {(isNewVehicleVisible || isEditionVehicleVisible) && (
           <VehicleForm
             defaultValues={selectedVehicle}
-            onSubmit={onVehicleFormSubmit}
+            onSubmit={submitVehicleForm}
             onCancel={cancelForm}
             title={isEditionVehicleVisible ? 'Edición de Vehículo' : 'Nuevo Vehículo'}
             isSubmitting={isSaving}

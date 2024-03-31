@@ -1,5 +1,18 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, onValue, push, set, get } from 'firebase/database';
+import {
+  getDatabase,
+  ref,
+  onValue,
+  push,
+  set,
+  get,
+  query,
+  startAt,
+  endAt,
+  orderByChild,
+  equalTo,
+  orderByValue,
+} from 'firebase/database';
 
 const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyCjHdELmBXbvrbR_KotkojBdkPNU65LuuQ',
@@ -13,4 +26,4 @@ const FIREBASE_CONFIG = {
 
 const app = initializeApp(FIREBASE_CONFIG);
 
-export { getDatabase, ref, onValue, push, set, get };
+export { getDatabase, ref, onValue, push, set, get, query, startAt, endAt, orderByChild, equalTo, orderByValue };
