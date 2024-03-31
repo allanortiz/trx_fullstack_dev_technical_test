@@ -26,9 +26,9 @@ export default function Home() {
   const handleUpdateVehicle = async (vehicle: Vehicle, { onSuccess }: Callback) => {
     updateVehicle(vehicle, {
       onError: (error) => toast.error(error.message),
-      onSuccess: () => {
+      onSuccess: (...args) => {
         toast.success('Vehículo actualizado exitosamente');
-        onSuccess?.();
+        onSuccess?.(...args);
       },
     });
   };

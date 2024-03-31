@@ -1,5 +1,7 @@
+import { AxiosResponse } from 'axios';
+
 export type Callback = {
-  onSuccess?: () => void;
+  onSuccess?: (data?: AxiosResponse<any, any>, variables?: any, context?: unknown) => void;
   onError?: (error: Error) => void;
   onSettled?: () => void;
 };

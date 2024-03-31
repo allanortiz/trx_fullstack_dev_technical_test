@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import Typography from '@/components/basic/Typography';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Vehicle } from '@/types/Vehicle';
 import { VehiclesSkeleton } from '../basic/skeletons/VehiclesSkeleton';
 import { VehicleItem } from '../composite/VehicleItem';
@@ -33,6 +33,10 @@ export const Vehicles = ({
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(null as any);
   const [isNewVehicleVisible, setIsNewVehicleVisible] = useState(false);
   const [isEditionVehicleVisible, setIsEditionVehicleVisible] = useState(false);
+
+  useEffect(() => {
+    console.log('eyeyeye');
+  }, [vehicles]);
 
   const showNewVehicle = () => {
     setIsNewVehicleVisible(true);
@@ -66,7 +70,10 @@ export const Vehicles = ({
     }
 
     updateVehicle(vehicle, {
-      onSuccess: () => setIsEditionVehicleVisible(false),
+      onSuccess: (data, updatedVehicle) => {
+        setIsEditionVehicleVisible(false);
+        setSelectedVehicle(updatedVehicle);
+      },
     });
   };
 
