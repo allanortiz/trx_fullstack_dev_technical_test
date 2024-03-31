@@ -20,7 +20,7 @@ type VehicleFormProps = {
 const validationSchema = yup.object().shape({
   license_plate: yup.string().trim().uppercase().required('La placa es requerida'),
   economic_number: yup.string().trim().uppercase().required('El número económico es requerido'),
-  vim: yup.string().trim().required('El VIM es requerido'),
+  vim: yup.string().trim().uppercase().required('El VIM es requerido'),
   seats: yup
     .number()
     .transform((value) => (isNaN(value) ? undefined : value))
@@ -82,7 +82,14 @@ export const VehicleForm = ({
           maxLength={40}
         />
 
-        <Input {...register('vim')} label="VIM" error={errors.vim?.message} placeholder="Ej. 123456" />
+        <RestrictedInput
+          {...register('vim')}
+          label="VIM"
+          error={errors.vim?.message}
+          placeholder="Ej. 1GNEK13Z42J123456"
+          regex="^[a-zA-Z0-9]*$"
+          maxLength={17}
+        />
 
         <NumberInput
           {...register('seats')}
