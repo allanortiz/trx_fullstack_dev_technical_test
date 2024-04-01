@@ -19,7 +19,7 @@ export const VehicleItem = ({ vehicle, onSelect }: VehicleItemProps): JSX.Elemen
       onClick={() => onSelect(vehicle)}
     >
       <div className="w-16 h-16 rounded-lg">
-        <Image src={vehicle.image_url || '/images/car.svg'} alt="Vehicle image" width={64} height={64} />
+        <Image src={'/images/car.svg'} alt="Vehicle image" width={64} height={64} />
       </div>
 
       <Typography as="div" className="flex flex-row justify-between flex-grow" fontSize="xl" color="gray-600">
