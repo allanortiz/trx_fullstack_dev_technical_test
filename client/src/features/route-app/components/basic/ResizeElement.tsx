@@ -1,7 +1,14 @@
-export const ResizeElement = () => {
+type ResizeElementProps = {
+  onClick?: () => void;
+};
+
+export const ResizeElement = ({ onClick }: ResizeElementProps): JSX.Element => {
   return (
-    <div className="grid place-items-center max-md:w-full md:h-full md:pl-2 md:pr-3 max-md:pt-2 max-md:pb-3">
-      <div className="h-[3px] w-16 md:h-16 md:w-[3px] bg-gray-200 rounded-full"></div>
+    <div
+      className="grid place-items-center max-lg:w-full lg:h-full lg:pl-2 lg:pr-3 max-lg:pt-2 max-lg:pb-3 cursor-pointer"
+      onClick={onClick}
+    >
+      <div className="h-[3px] w-16 lg:h-16 lg:w-[3px] bg-gray-200 rounded-full"></div>
     </div>
   );
 };

@@ -20,8 +20,10 @@ type VehicleItemProps = {
   updateVehicle: (vehicle: Vehicle, callback: Callback) => void;
   deleteVehicle: (vehicleId: string, callback: Callback) => void;
   overwriteVehicleListOptions: (options: UseVehicleProps) => void;
+  onResize: () => void;
   isLoading?: boolean;
   isSaving?: boolean;
+  isCollapsed?: boolean;
 };
 
 export const Vehicles = ({
@@ -30,8 +32,10 @@ export const Vehicles = ({
   updateVehicle,
   deleteVehicle,
   overwriteVehicleListOptions,
+  onResize,
   isLoading,
   isSaving,
+  isCollapsed,
 }: VehicleItemProps): JSX.Element => {
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(null as any);
   const [isNewVehicleVisible, setIsNewVehicleVisible] = useState(false);
@@ -92,13 +96,13 @@ export const Vehicles = ({
   };
 
   return (
-    <section className="flex flex-col w-full h-full max-h-screen overflow-auto bg-white max-md:rounded-t-2xl md:flex-row md:rounded-l-2xl">
-      <ResizeElement />
+    <section className="flex flex-col w-full h-full max-h-screen bg-white max-lg:rounded-t-2xl lg:flex-row lg:rounded-l-2xl">
+      <ResizeElement onClick={onResize} />
 
       <div
         className={clsx(
-          'flex flex-col flex-grow md:pr-8 md:pl-2 max-md:px-8 md:pb-8',
-          (selectedVehicle || isNewVehicleVisible) && 'hidden'
+          'flex flex-col flex-grow lg:pr-8 lg:pl-2 max-lg:px-8 overflow-auto pb-8',
+          (selectedVehicle || isNewVehicleVisible || isCollapsed) && 'hidden'
         )}
       >
         <Typography as="h2" fontWeight="bold" fontSize="2xl" className="block w-full my-8 text-center">
@@ -140,8 +144,8 @@ export const Vehicles = ({
 
       <div
         className={clsx(
-          'duration-200 ease-out transition flex flex-col flex-grow py-8 pr-8',
-          !isNewVehicleVisible && !isEditionVehicleVisible && !selectedVehicle && 'hidden'
+          'duration-200 ease-out transition flex flex-col flex-grow py-8 pr-8 max-lg:pl-8 overflow-auto',
+          (isCollapsed || (!isNewVehicleVisible && !isEditionVehicleVisible && !selectedVehicle)) && 'hidden'
         )}
       >
         {!!selectedVehicle && !isEditionVehicleVisible && (

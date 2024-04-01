@@ -1,7 +1,9 @@
 import { Vehicle } from '@/types/Vehicle';
-import { Map, Vehicles } from '../..';
+import { RoutesMap, Vehicles } from '../..';
 import { Callback } from '@/types/Callback';
 import { UseVehicleProps } from '../../hooks/useVehicles';
+import clsx from 'clsx';
+import { useState } from 'react';
 
 type RoutesAppPageProps = {
   vehicles: Vehicle[];
@@ -22,21 +24,35 @@ export const RoutesAppPage = ({
   isLoadingVehicles,
   isSavingVehicle,
 }: RoutesAppPageProps): JSX.Element => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const handleResize = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
   return (
-    <div className="flex flex-col flex-grow w-full 100vh md:flex-row bg-primary">
-      <div className="flex-grow">
-        <Map />
+    <div className="flex flex-col flex-grow w-full 100vh lg:flex-row bg-primary">
+      <div className="flex-grow max-lg:-mb-5 lg:-mr-[8px] relative">
+        <RoutesMap />
       </div>
 
-      <div className="max-md:h-128 md:w-128">
+      <div
+        className={clsx(
+          'relative transition-all duration-300 ease-in-out',
+          isCollapsed && 'max-lg:h-8 lg:w-8',
+          !isCollapsed && 'max-lg:h-128 lg:w-128'
+        )}
+      >
         <Vehicles
           vehicles={vehicles}
           createVehicle={createVehicle}
           updateVehicle={updateVehicle}
           deleteVehicle={deleteVehicle}
           overwriteVehicleListOptions={overwriteVehicleListOptions}
+          onResize={handleResize}
           isLoading={isLoadingVehicles}
           isSaving={isSavingVehicle}
+          isCollapsed={isCollapsed}
         />
       </div>
     </div>

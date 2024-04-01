@@ -94,9 +94,9 @@ export const VehicleForm = ({
         <NumberInput
           {...register('seats')}
           label="Asientos"
+          error={errors?.seats?.message}
           placeholder="Ej: 5"
           maxLength={2}
-          error={errors?.seats?.message}
         />
 
         <Input
@@ -104,6 +104,7 @@ export const VehicleForm = ({
           label="Seguro"
           error={errors.insurance?.message}
           placeholder="Ej. Seguro de daños"
+          maxLength={40}
         />
 
         <Input
@@ -111,11 +112,24 @@ export const VehicleForm = ({
           label="Número de Seguro"
           error={errors.insurance_number?.message}
           placeholder="Ej. 123456"
+          maxLength={30}
         />
 
-        <Input {...register('brand')} label="Marca" error={errors.brand?.message} placeholder="Ej. Toyota" />
+        <Input
+          {...register('brand')}
+          label="Marca"
+          error={errors.brand?.message}
+          placeholder="Ej. Toyota"
+          maxLength={30}
+        />
 
-        <Input {...register('model')} label="Modelo" error={errors.model?.message} placeholder="Ej. Corolla" />
+        <Input
+          {...register('model')}
+          label="Modelo"
+          error={errors.model?.message}
+          placeholder="Ej. Corolla"
+          maxLength={30}
+        />
 
         <NumberInput
           {...register('year')}
@@ -125,7 +139,13 @@ export const VehicleForm = ({
           error={errors?.year?.message}
         />
 
-        <Input {...register('color')} label="Color" error={errors.color?.message} placeholder="Ej. Rojo" />
+        <Input
+          {...register('color')}
+          label="Color"
+          error={errors.color?.message}
+          placeholder="Ej. Rojo"
+          maxLength={20}
+        />
       </div>
 
       <div className="flex flex-row items-center justify-between pt-12 pb-12">
