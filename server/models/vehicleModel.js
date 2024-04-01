@@ -26,9 +26,10 @@ export const getAllVehicles = (res, { page, size, filter = '' }) => {
         const array = [];
 
         for (const key in data) {
-          const index = data[key].index.toLowerCase();
+          console.log(data[key].index);
+          const index = data[key]?.index?.toLowerCase();
 
-          if (!index.includes(filter.toLowerCase())) {
+          if (!index?.includes?.(filter?.toLowerCase())) {
             continue;
           }
 
@@ -64,8 +65,10 @@ export const addVehicle = (newVehicle) => {
 export const updateVehicleById = (id, updatedVehicle) => {
   const db = getDatabase();
   const reference = ref(db, `vehicles/${id}`);
+  const index = [...Object.values(updatedVehicle)].join('').toLowerCase();
+  const updatedVehicleWithIndex = { ...updatedVehicle, index };
 
-  return set(reference, updatedVehicle);
+  return set(reference, updatedVehicleWithIndex);
 };
 
 export const deleteVehicleById = (id) => {

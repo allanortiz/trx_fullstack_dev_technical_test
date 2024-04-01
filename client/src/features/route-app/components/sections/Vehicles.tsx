@@ -88,8 +88,6 @@ export const Vehicles = ({
 
   return (
     <section className="flex flex-col w-full h-full max-h-screen overflow-auto bg-white max-md:rounded-t-2xl md:flex-row md:rounded-l-2xl">
-      {isLoading && <VehiclesSkeleton />}
-
       <ResizeElement />
 
       <div
@@ -102,17 +100,23 @@ export const Vehicles = ({
           Lista de vehículos
         </Typography>
 
-        <div className="flex flex-row items-center justify-between mb-8">
-          <InputSearch placeholder="¿Qué vehículo buscas?" onSearchChange={handleSearchChange} />
+        {isLoading && <VehiclesSkeleton />}
 
-          <SiAddthis className="text-primary w-[2rem] h-[2rem] cursor-pointer" onClick={showNewVehicle} />
-        </div>
+        {!isLoading && (
+          <>
+            <div className="flex flex-row items-center justify-between mb-8">
+              <InputSearch placeholder="¿Qué vehículo buscas?" onSearchChange={handleSearchChange} />
 
-        <div className="flex flex-col flex-grow gap-4 overflow-y-auto transition duration-200 ease-out">
-          {vehicles.map((vehicle, index) => (
-            <VehicleItem key={index} vehicle={vehicle} onSelect={selectVehicle} />
-          ))}
-        </div>
+              <SiAddthis className="text-primary w-[2rem] h-[2rem] cursor-pointer" onClick={showNewVehicle} />
+            </div>
+
+            <div className="flex flex-col flex-grow gap-4 overflow-y-auto transition duration-200 ease-out">
+              {vehicles.map((vehicle, index) => (
+                <VehicleItem key={index} vehicle={vehicle} onSelect={selectVehicle} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
       <div
