@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import vehicleRoutes from './routes/vehicleRoutes.js';
+import vehicleRoutes from '../routes/vehicleRoutes.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
