@@ -11,13 +11,18 @@ import {
   orderByChild,
   orderByValue,
   equalTo,
+  limitToFirst,
 } from '../firebase.js';
 
 export const getAllVehicles = (res, { page, size, filter = '' }) => {
   try {
     const db = getDatabase();
     const reference = ref(db, 'vehicles/');
-    const queryRef = filter ? query(reference, orderByChild('index')) : reference;
+    const queryRef = query(reference, orderByChild('index'));
+    // const queryRef = query(reference, orderByChild('index'), limitToFirst(size), startAt(startIdx));
+    // const queryRef = filter ? query(reference, orderByChild('index'), limitToFirst(size)) : reference;
+
+    const startIdx = (page - 1) * size;
 
     return onValue(
       queryRef,
@@ -26,7 +31,6 @@ export const getAllVehicles = (res, { page, size, filter = '' }) => {
         const array = [];
 
         for (const key in data) {
-          console.log(data[key].index);
           const index = data[key]?.index?.toLowerCase();
 
           if (!index?.includes?.(filter?.toLowerCase())) {

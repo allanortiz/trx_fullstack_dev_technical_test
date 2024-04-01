@@ -12,6 +12,7 @@ import {
   orderByChild,
   equalTo,
   orderByValue,
+  limitToFirst,
 } from 'firebase/database';
 
 const FIREBASE_CONFIG = {
@@ -26,4 +27,18 @@ const FIREBASE_CONFIG = {
 
 const app = initializeApp(FIREBASE_CONFIG);
 
-export { getDatabase, ref, onValue, push, set, get, query, startAt, endAt, orderByChild, equalTo, orderByValue };
+export {
+  getDatabase,
+  ref,
+  onValue,
+  push,
+  set,
+  get,
+  query,
+  startAt,
+  endAt,
+  orderByChild,
+  equalTo,
+  orderByValue,
+  limitToFirst,
+};

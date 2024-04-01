@@ -9,9 +9,15 @@ type InputSearchProps = {
   placeholder?: string;
   onSearchChange?: (queryString: string) => void;
   onFilterClick?: () => void;
+  onChange?: (event: any) => void;
 };
 
-export const InputSearch = ({ placeholder, onSearchChange, onFilterClick }: InputSearchProps): JSX.Element => {
+export const InputSearch = ({
+  placeholder,
+  onSearchChange,
+  onChange,
+  onFilterClick,
+}: InputSearchProps): JSX.Element => {
   const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
@@ -26,6 +32,7 @@ export const InputSearch = ({ placeholder, onSearchChange, onFilterClick }: Inpu
 
   const handleOnChange = (event: any) => {
     setInputValue(event.target.value);
+    onChange?.(event);
   };
 
   return (

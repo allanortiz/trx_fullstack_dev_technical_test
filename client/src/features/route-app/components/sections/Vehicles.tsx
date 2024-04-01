@@ -36,6 +36,7 @@ export const Vehicles = ({
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(null as any);
   const [isNewVehicleVisible, setIsNewVehicleVisible] = useState(false);
   const [isEditionVehicleVisible, setIsEditionVehicleVisible] = useState(false);
+  const [searchInputValue, setSearchInputValue] = useState('');
 
   const showNewVehicle = () => {
     setIsNewVehicleVisible(true);
@@ -86,6 +87,12 @@ export const Vehicles = ({
     overwriteVehicleListOptions({ filter: queryString });
   };
 
+  const handleInputSearchChange = (event: any) => {
+    setSearchInputValue(event.target.value);
+  };
+
+  console.log(vehicles);
+
   return (
     <section className="flex flex-col w-full h-full max-h-screen overflow-auto bg-white max-md:rounded-t-2xl md:flex-row md:rounded-l-2xl">
       <ResizeElement />
@@ -100,21 +107,35 @@ export const Vehicles = ({
           Lista de vehículos
         </Typography>
 
-        {isLoading && <VehiclesSkeleton />}
+        {isLoading && !searchInputValue && <VehiclesSkeleton hasFilters />}
 
-        {!isLoading && (
+        {(!isLoading || !!searchInputValue) && (
           <>
             <div className="flex flex-row items-center justify-between mb-8">
-              <InputSearch placeholder="¿Qué vehículo buscas?" onSearchChange={handleSearchChange} />
+              <InputSearch
+                placeholder="¿Qué vehículo buscas?"
+                onSearchChange={handleSearchChange}
+                onChange={handleInputSearchChange}
+              />
 
               <SiAddthis className="text-primary w-[2rem] h-[2rem] cursor-pointer" onClick={showNewVehicle} />
             </div>
 
-            <div className="flex flex-col flex-grow gap-4 overflow-y-auto transition duration-200 ease-out">
-              {vehicles.map((vehicle, index) => (
-                <VehicleItem key={index} vehicle={vehicle} onSelect={selectVehicle} />
-              ))}
-            </div>
+            {!isLoading && vehicles?.length === 0 && (
+              <Typography as="div" className="text-center" fontSize="lg">
+                No se encontraron vehículos
+              </Typography>
+            )}
+
+            {isLoading && !!searchInputValue && <VehiclesSkeleton />}
+
+            {!isLoading && (
+              <div className="flex flex-col flex-grow gap-4 overflow-y-auto transition duration-200 ease-out">
+                {vehicles?.map((vehicle, index) => (
+                  <VehicleItem key={index} vehicle={vehicle} onSelect={selectVehicle} />
+                ))}
+              </div>
+            )}
           </>
         )}
       </div>
