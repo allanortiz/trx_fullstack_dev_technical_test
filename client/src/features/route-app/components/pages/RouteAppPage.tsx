@@ -25,6 +25,7 @@ export const RoutesAppPage = ({
   isSavingVehicle,
 }: RoutesAppPageProps): JSX.Element => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(null as any);
 
   const handleResize = () => {
     setIsCollapsed(!isCollapsed);
@@ -33,7 +34,7 @@ export const RoutesAppPage = ({
   return (
     <div className="flex flex-col flex-grow w-full 100vh lg:flex-row bg-primary">
       <div className="flex-grow max-lg:-mb-5 lg:-mr-[8px] relative">
-        <RoutesMap />
+        <RoutesMap selectedVehicle={selectedVehicle} />
       </div>
 
       <div
@@ -45,6 +46,8 @@ export const RoutesAppPage = ({
       >
         <Vehicles
           vehicles={vehicles}
+          selectedVehicle={selectedVehicle}
+          selectVehicle={setSelectedVehicle}
           createVehicle={createVehicle}
           updateVehicle={updateVehicle}
           deleteVehicle={deleteVehicle}

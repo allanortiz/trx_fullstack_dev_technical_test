@@ -7,8 +7,22 @@ export const getVehicles = async (req, res) => {
 };
 
 export const createVehicle = (req, res) => {
-  const { license_plate, economic_number, vim, seats, insurance, insurance_number, brand, model, year, color } =
-    req.body || {};
+  const {
+    license_plate,
+    economic_number,
+    vim,
+    seats,
+    insurance,
+    insurance_number,
+    brand,
+    model,
+    year,
+    color,
+    route_start_lat,
+    route_start_lng,
+    route_end_lat,
+    route_end_lng,
+  } = req.body || {};
   const newRecord = {
     license_plate,
     economic_number,
@@ -20,6 +34,10 @@ export const createVehicle = (req, res) => {
     model,
     year,
     color,
+    route_start_lat,
+    route_start_lng,
+    route_end_lat,
+    route_end_lng,
   };
 
   addVehicle(newRecord)
@@ -33,8 +51,22 @@ export const createVehicle = (req, res) => {
 
 export const updateVehicle = (req, res) => {
   const { id } = req.params;
-  const { license_plate, economic_number, vim, seats, insurance, insurance_number, brand, model, year, color } =
-    req.body || {};
+  const {
+    license_plate,
+    economic_number,
+    vim,
+    seats,
+    insurance,
+    insurance_number,
+    brand,
+    model,
+    year,
+    color,
+    route_start_lat,
+    route_start_lng,
+    route_end_lat,
+    route_end_lng,
+  } = req.body || {};
   const updatedData = {
     license_plate,
     economic_number,
@@ -46,6 +78,10 @@ export const updateVehicle = (req, res) => {
     model,
     year,
     color,
+    route_start_lat,
+    route_start_lng,
+    route_end_lat,
+    route_end_lng,
   };
 
   updateVehicleById(id, updatedData)

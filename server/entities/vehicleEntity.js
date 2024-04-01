@@ -1,5 +1,19 @@
 class Vehicle {
-  constructor(id, license_plate, economic_number, vim, seats, insurance, insurance_number, brand, model, year, color) {
+  constructor(
+    id,
+    license_plate,
+    economic_number,
+    vim,
+    seats,
+    insurance,
+    insurance_number,
+    brand,
+    model,
+    year,
+    color,
+    route_start_lat,
+    route_end_lng
+  ) {
     this.id = id;
     this.license_plate = license_plate;
     this.economic_number = economic_number;
@@ -11,6 +25,8 @@ class Vehicle {
     this.model = model;
     this.year = year;
     this.color = color;
+    this.route_start_lat = route_start_lat;
+    this.route_end_lng = route_end_lng;
   }
 }
 

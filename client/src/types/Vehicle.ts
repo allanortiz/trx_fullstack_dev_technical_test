@@ -10,5 +10,8 @@ export type Vehicle = {
   model: string;
   year: number;
   color: string;
-  image_url?: string;
+  route_start_lat?: string;
+  route_start_lng?: string;
+  route_end_lat?: string;
+  route_end_lng?: string;
 };

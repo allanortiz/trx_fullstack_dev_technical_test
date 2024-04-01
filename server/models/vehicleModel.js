@@ -24,7 +24,7 @@ export const getAllVehicles = async (res, { page, size, filter = '' }) => {
     // const queryRef = query(reference, orderByChild('id'), limitToFirst(pageSize), startAt(filter));
     // const queryRef = filter ? query(reference, orderByChild('index'), limitToFirst(size)) : reference;
 
-    const countSnapshot = await get(query(reference, orderByChild('id')));
+    // const countSnapshot = await get(query(reference, orderByChild('id')));
     // const totalRecords = countSnapshot.getChildrenCount();
 
     // console.log(totalRecords);

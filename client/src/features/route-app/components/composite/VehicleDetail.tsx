@@ -40,7 +40,10 @@ export const VehicleDetail = ({
     model,
     year,
     color,
-    // image_url,
+    route_start_lat,
+    route_start_lng,
+    route_end_lat,
+    route_end_lng,
   } = vehicle || ({} as any);
 
   const openConfirmModal = () => setIsConfirmModalOpen(true);
@@ -79,6 +82,10 @@ export const VehicleDetail = ({
         <DetailItem label="Modelo" value={model ?? ''} />
         <DetailItem label="Año" value={String(year)} />
         <DetailItem label="Color" value={color ?? ''} />
+        <DetailItem label="Inicio ruta (lat)" value={route_start_lat ?? ''} />
+        <DetailItem label="Inicio ruta (lng)" value={route_start_lng ?? ''} />
+        <DetailItem label="Fin ruta (lat)" value={route_end_lat ?? ''} />
+        <DetailItem label="Fin ruta (lng)" value={route_end_lng ?? ''} />
       </div>
 
       <div className="grid w-full my-8 place-items-center">

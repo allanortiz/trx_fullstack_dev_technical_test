@@ -37,6 +37,10 @@ const validationSchema = yup.object().shape({
       return value >= 1900 && value <= new Date().getFullYear() + 1;
     }),
   color: yup.string().trim().required('El color es requerido'),
+  route_start_lat: yup.string().trim().required('El inicio de ruta (lat) es requerida'),
+  route_start_lng: yup.string().trim().required('El inicio de ruta (lng) es requerida'),
+  route_end_lat: yup.string().trim().required('El fin de ruta (lat) latitud es requerida'),
+  route_end_lng: yup.string().trim().required('El fin de ruta (lng) longitud es requerida'),
 });
 
 export const VehicleForm = ({
@@ -146,9 +150,41 @@ export const VehicleForm = ({
           placeholder="Ej. Rojo"
           maxLength={20}
         />
+
+        <Input
+          {...register('route_start_lat')}
+          label="Inicio ruta (lat)"
+          error={errors.route_start_lat?.message}
+          placeholder="Ej. 21.022022"
+          maxLength={20}
+        />
+
+        <Input
+          {...register('route_start_lng')}
+          label="Inicio ruta (lng)"
+          error={errors.route_start_lng?.message}
+          placeholder="Ej. -89.565442"
+          maxLength={20}
+        />
+
+        <Input
+          {...register('route_end_lat')}
+          label="Fin ruta (lat)"
+          error={errors.route_end_lat?.message}
+          placeholder="Ej. 21.022022"
+          maxLength={20}
+        />
+
+        <Input
+          {...register('route_end_lng')}
+          label="Fin ruta (lng)"
+          error={errors.route_end_lng?.message}
+          placeholder="Ej. -89.565442"
+          maxLength={20}
+        />
       </div>
 
-      <div className="flex flex-row items-center justify-between pt-12 pb-12">
+      <div className="flex flex-row items-center justify-between pt-12 pb-6">
         <Button onClick={onCancel} disabled={isSubmitting}>
           Cancelar
         </Button>

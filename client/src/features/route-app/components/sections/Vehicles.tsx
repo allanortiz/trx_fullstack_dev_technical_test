@@ -16,6 +16,8 @@ import { UseVehicleProps } from '../../hooks/useVehicles';
 
 type VehicleItemProps = {
   vehicles: Vehicle[];
+  selectedVehicle: Vehicle;
+  selectVehicle: (vehicle: Vehicle) => void;
   createVehicle: (vehicle: Vehicle, callback: Callback) => void;
   updateVehicle: (vehicle: Vehicle, callback: Callback) => void;
   deleteVehicle: (vehicleId: string, callback: Callback) => void;
@@ -28,6 +30,8 @@ type VehicleItemProps = {
 
 export const Vehicles = ({
   vehicles,
+  selectedVehicle,
+  selectVehicle,
   createVehicle,
   updateVehicle,
   deleteVehicle,
@@ -37,7 +41,6 @@ export const Vehicles = ({
   isSaving,
   isCollapsed,
 }: VehicleItemProps): JSX.Element => {
-  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle>(null as any);
   const [isNewVehicleVisible, setIsNewVehicleVisible] = useState(false);
   const [isEditionVehicleVisible, setIsEditionVehicleVisible] = useState(false);
   const [searchInputValue, setSearchInputValue] = useState('');
@@ -55,12 +58,8 @@ export const Vehicles = ({
     setIsEditionVehicleVisible(false);
   };
 
-  const selectVehicle = (vehicle: Vehicle) => {
-    setSelectedVehicle(vehicle);
-  };
-
   const deselectVehicle = () => {
-    setSelectedVehicle(null as any);
+    selectVehicle(null as any);
     setIsEditionVehicleVisible(false);
   };
 
@@ -76,7 +75,7 @@ export const Vehicles = ({
     updateVehicle(vehicle, {
       onSuccess: (data, updatedVehicle) => {
         setIsEditionVehicleVisible(false);
-        setSelectedVehicle(updatedVehicle);
+        selectVehicle(updatedVehicle);
       },
     });
   };
