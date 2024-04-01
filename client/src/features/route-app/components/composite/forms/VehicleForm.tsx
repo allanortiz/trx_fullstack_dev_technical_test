@@ -5,7 +5,6 @@ import RestrictedInput from '@/components/basic/inputs/RestrictedInput';
 import Typography from '@/components/basic/Typography';
 import { Vehicle } from '@/types/Vehicle';
 import { yupResolver } from '@hookform/resolvers/yup';
-import clsx from 'clsx';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 

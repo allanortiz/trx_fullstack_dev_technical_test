@@ -104,34 +104,6 @@ export const RoutesMap = ({ selectedVehicle }: RoutesMapProps) => {
         center={(centerPosition as any) || DEFAULT_CENTER_POSITION}
         onLoad={() => {
           setIsMapReady(true);
-          // const directionsService = new window.google.maps.DirectionsService();
-          // const origin = { lat: 21.022022, lng: -89.565442 };
-          // const destination = { lat: 20.893736, lng: -89.666955 };
-          // // const waypt = [
-          // //   {
-          // //     location: { lat: 40.278022, lng: -76.899615 },
-          // //     stopover: true,
-          // //   },
-          // //   {
-          // //     location: { lat: 40.750216, lng: -78.922049 },
-          // //     stopover: true,
-          // //   },
-          // // ];
-          // directionsService.route(
-          //   {
-          //     origin: origin,
-          //     destination: destination,
-          //     // waypoints: waypt,
-          //     travelMode: window.google.maps.TravelMode.DRIVING,
-          //   },
-          //   (result, status) => {
-          //     if (status === window.google.maps.DirectionsStatus.OK) {
-          //       setDirections(result);
-          //     } else {
-          //       console.error(`Error fetching directions ${result}`);
-          //     }
-          //   }
-          // );
         }}
       >
         {!!selectedVehicle && !!directions && <DirectionsRenderer directions={directions} />}
