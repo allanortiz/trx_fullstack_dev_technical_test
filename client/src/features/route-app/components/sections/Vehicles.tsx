@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import Typography from '@/components/basic/Typography';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Vehicle } from '@/types/Vehicle';
 import { VehiclesSkeleton } from '../basic/skeletons/VehiclesSkeleton';
 import { VehicleItem } from '../composite/VehicleItem';
@@ -90,8 +90,6 @@ export const Vehicles = ({
   const handleInputSearchChange = (event: any) => {
     setSearchInputValue(event.target.value);
   };
-
-  console.log(vehicles);
 
   return (
     <section className="flex flex-col w-full h-full max-h-screen overflow-auto bg-white max-md:rounded-t-2xl md:flex-row md:rounded-l-2xl">

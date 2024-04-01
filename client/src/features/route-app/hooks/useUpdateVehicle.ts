@@ -10,13 +10,18 @@ export function useUpdateVehicle() {
       return await httpClient.put(`api/vehicles/${data.id}`, { ...data });
     },
     onSuccess: (data, variables) => {
-      queryClient.setQueriesData({ queryKey: 'vehicles' } as any, (old: any) => {
-        const index = old.data.findIndex((vehicle: Vehicle) => vehicle.id === variables.id);
+      queryClient
+        .getQueryCache()
+        .findAll({ queryKey: ['vehicles'] })
+        .forEach(({ queryKey }) => {
+          queryClient.setQueryData(queryKey, (old: any) => {
+            const index = old.data.findIndex((vehicle: Vehicle) => vehicle.id === variables.id);
 
-        old.data[index] = variables;
+            old.data[index] = variables;
 
-        return { ...old };
-      });
+            return { ...old };
+          });
+        });
     },
   });
 }

@@ -7,6 +7,7 @@ export const onKeyPress = (event: any, regex: string) => {
   const newRegex = new RegExp(regex);
 
   if (!newRegex.test(event.key)) {
+    console.log('yeah1');
     event.preventDefault();
   }
 };

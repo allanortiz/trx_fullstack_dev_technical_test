@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import InputTex, { InputProps } from './Input';
+import Input, { InputProps } from './Input';
 
 type NumberInputProps = InputProps & { isDecimal?: boolean };
 
@@ -13,7 +13,7 @@ export const onKeyPress = (event: any, isDecimal = false) => {
     const value = Number(event.target.value) + Number(key);
     const regex = /^\d{0,9}$|(?=^.{0,9}$)^\d+\.\d{0,9}$/; // Decimal
 
-    if (regex.test(String(value))) return;
+    if (regex.test(String(value)) || event.key === 'Enter') return;
 
     theEvent.returnValue = false;
 
@@ -24,7 +24,7 @@ export const onKeyPress = (event: any, isDecimal = false) => {
     return;
   }
 
-  if (!/[0-9]/g.test(event.key as string)) {
+  if (!/[0-9]/g.test(event.key as string) && event.key !== 'Enter') {
     event.preventDefault();
   }
 };
@@ -43,7 +43,7 @@ const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(function Inpu
   { isDecimal = false, ...props },
   ref
 ) {
-  return <InputTex ref={ref} {...props} onKeyPress={(event) => onKeyPress(event, isDecimal)} onPaste={onPaste} />;
+  return <Input ref={ref} {...props} onKeyPress={(event) => onKeyPress(event, isDecimal)} onPaste={onPaste} />;
 });
 
 export default NumberInput;

@@ -14,15 +14,22 @@ import {
   limitToFirst,
 } from '../firebase.js';
 
-export const getAllVehicles = (res, { page, size, filter = '' }) => {
+export const getAllVehicles = async (res, { page, size, filter = '' }) => {
   try {
+    // const pageNumber = Number(page);
+    // const pageSize = Number(size);
     const db = getDatabase();
     const reference = ref(db, 'vehicles/');
     const queryRef = query(reference, orderByChild('index'));
-    // const queryRef = query(reference, orderByChild('index'), limitToFirst(size), startAt(startIdx));
+    // const queryRef = query(reference, orderByChild('id'), limitToFirst(pageSize), startAt(filter));
     // const queryRef = filter ? query(reference, orderByChild('index'), limitToFirst(size)) : reference;
 
-    const startIdx = (page - 1) * size;
+    const countSnapshot = await get(query(reference, orderByChild('id')));
+    // const totalRecords = countSnapshot.getChildrenCount();
+
+    // console.log(totalRecords);
+
+    // const startIdx = (pageNumber - 1) * pageSize;
 
     return onValue(
       queryRef,

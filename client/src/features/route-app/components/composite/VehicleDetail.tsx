@@ -1,10 +1,14 @@
 import clsx from 'clsx';
+import Typography from '@/components/basic/Typography';
+import ConfirmModal from '@/components/composite/ConfirmModal';
+import { useState } from 'react';
 import { Button } from '@/components/basic/Button';
 import { Vehicle } from '@/types/Vehicle';
-import { BsChevronLeft } from 'react-icons/bs';
+import { BsChevronLeft, BsFillQuestionOctagonFill } from 'react-icons/bs';
+import { IoIosWarning } from 'react-icons/io';
+import { IoWarningOutline } from 'react-icons/io5';
 import { MdModeEdit } from 'react-icons/md';
 import { DetailItem } from '../basic/DetailItem';
-import Typography from '@/components/basic/Typography';
 
 type VehicleDetailProps = {
   vehicle: Vehicle;
@@ -23,6 +27,8 @@ export const VehicleDetail = ({
   hasPadding = true,
   isDeleting,
 }: VehicleDetailProps): JSX.Element => {
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
   const {
     license_plate,
     economic_number,
@@ -36,6 +42,15 @@ export const VehicleDetail = ({
     color,
     // image_url,
   } = vehicle || ({} as any);
+
+  const openConfirmModal = () => setIsConfirmModalOpen(true);
+
+  const closeConfirmModal = () => setIsConfirmModalOpen(false);
+
+  const handleConfirmModal = () => {
+    setIsConfirmModalOpen(false);
+    onDelete();
+  };
 
   return (
     <div className={clsx('flex-grow', hasPadding && 'p-8')}>
@@ -67,10 +82,27 @@ export const VehicleDetail = ({
       </div>
 
       <div className="grid w-full my-8 place-items-center">
-        <Button color="danger" isStrong onClick={onDelete} isLoading={isDeleting} disabled={isDeleting}>
+        <Button color="danger" isStrong onClick={openConfirmModal} isLoading={isDeleting} disabled={isDeleting}>
           Eliminar
         </Button>
       </div>
+
+      <ConfirmModal
+        open={isConfirmModalOpen}
+        onCancel={closeConfirmModal}
+        onConfirm={handleConfirmModal}
+        onClose={closeConfirmModal}
+        isLoading={false}
+      >
+        <div className="flex w-full flex-col items-center justify-center gap-8 ">
+          <IoIosWarning className="text-5xl text-red-600 w-20 h-20" />
+
+          <Typography as="p" className="text-center text-lg text-gray-700">
+            Estás por eliminar el vehículo con número económico <strong>{economic_number ?? ''}</strong> ¿Deseas
+            continuar?
+          </Typography>
+        </div>
+      </ConfirmModal>
     </div>
   );
 };
